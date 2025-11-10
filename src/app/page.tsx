@@ -91,6 +91,14 @@ export default function Home() {
   
   const availableTimes = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'];
 
+  function handleFormAction(formData: FormData) {
+    const date = form.getValues('date');
+    if (date) {
+      formData.set('date', date.toISOString());
+    }
+    formAction(formData);
+  }
+
   return (
     <>
       <section className="relative w-full h-[60vh] min-h-[400px] flex items-center justify-center text-center text-white px-4">
@@ -128,7 +136,7 @@ export default function Home() {
               Elige tu servicio y encuentra un horario que te convenga.
             </p>
             <Form {...form}>
-              <form action={formAction} className="space-y-8">
+              <form action={handleFormAction} className="space-y-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
                     control={form.control}

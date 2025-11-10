@@ -21,11 +21,6 @@ export async function createAppointment(
 ) {
   const rawFormData = Object.fromEntries(formData.entries());
 
-  // Manually convert date to string if it's a Date object for validation
-  if (rawFormData.date instanceof Date) {
-    rawFormData.date = rawFormData.date.toISOString();
-  }
-
   const validatedFields = appointmentFormSchema.safeParse(rawFormData);
 
   if (!validatedFields.success) {
