@@ -55,12 +55,12 @@ export default function AdminDashboardPage() {
     <div className="container mx-auto p-4 md:p-8">
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold font-headline">
-          Scheduled Appointments
+          Citas Agendadas
         </h1>
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Upcoming Bookings</CardTitle>
+          <CardTitle>Próximas Citas</CardTitle>
         </CardHeader>
         <CardContent>
           <DataTable columns={columns} data={appointments} />

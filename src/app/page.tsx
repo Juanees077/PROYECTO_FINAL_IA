@@ -7,6 +7,7 @@ import { useFormState } from 'react-dom';
 import { useEffect } from 'react';
 import Image from 'next/image';
 import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 import { Calendar as CalendarIcon, Loader2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -39,19 +40,19 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const appointmentSchema = z.object({
   clientName: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
+    message: 'El nombre debe tener al menos 2 caracteres.',
   }),
   clientPhone: z.string().min(10, {
-    message: 'Please enter a valid phone number.',
+    message: 'Por favor, introduce un número de teléfono válido.',
   }),
   service: z.enum(['Manicure', 'Pedicure', 'Gel Nails', 'Nail Art'], {
-    required_error: 'Please select a service.',
+    required_error: 'Por favor, selecciona un servicio.',
   }),
   date: z.date({
-    required_error: 'A date for the appointment is required.',
+    required_error: 'Se requiere una fecha para la cita.',
   }),
   time: z.string({
-    required_error: 'Please select a time slot.',
+    required_error: 'Por favor, selecciona un horario.',
   }),
 });
 
@@ -72,13 +73,13 @@ export default function Home() {
     if (state?.message) {
       if (state.errors) {
         toast({
-          title: 'Oops!',
+          title: '¡Ups!',
           description: state.message,
           variant: 'destructive',
         });
       } else {
         toast({
-          title: 'Success!',
+          title: '¡Éxito!',
           description: state.message,
         });
         form.reset();
@@ -106,13 +107,13 @@ export default function Home() {
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 max-w-2xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-headline mb-4 tracking-wider">
-            Elegance at Your Fingertips
+            Elegancia en Tus Manos
           </h1>
           <p className="text-lg md:text-xl font-body mb-8">
-            Experience the finest nail care in a serene and beautiful environment.
+            Disfruta del mejor cuidado de uñas en un ambiente sereno y hermoso.
           </p>
           <Button size="lg" asChild>
-            <a href="#book-now">Book Your Appointment</a>
+            <a href="#book-now">Agenda Tu Cita</a>
           </Button>
         </div>
       </section>
@@ -121,10 +122,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-headline text-center mb-2">
-              Book a Visit
+              Agenda una Visita
             </h2>
             <p className="text-muted-foreground text-center mb-8">
-              Choose your service and find a time that works for you.
+              Elige tu servicio y encuentra un horario que te convenga.
             </p>
             <Form {...form}>
               <form action={formAction} className="space-y-8">
@@ -134,9 +135,9 @@ export default function Home() {
                     name="clientName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Full Name</FormLabel>
+                        <FormLabel>Nombre Completo</FormLabel>
                         <FormControl>
-                          <Input placeholder="Your Name" {...field} />
+                          <Input placeholder="Tu Nombre" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -147,9 +148,9 @@ export default function Home() {
                     name="clientPhone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Phone Number</FormLabel>
+                        <FormLabel>Número de Teléfono</FormLabel>
                         <FormControl>
-                          <Input placeholder="Your Phone" {...field} />
+                          <Input placeholder="Tu Teléfono" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -161,21 +162,21 @@ export default function Home() {
                   name="service"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Service</FormLabel>
+                      <FormLabel>Servicio</FormLabel>
                       <Select
                         onValueChange={field.onChange}
                         defaultValue={field.value}
                       >
                         <FormControl>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select a nail service" />
+                            <SelectValue placeholder="Selecciona un servicio de uñas" />
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value="Manicure">Manicure</SelectItem>
-                          <SelectItem value="Pedicure">Pedicure</SelectItem>
-                          <SelectItem value="Gel Nails">Gel Nails</SelectItem>
-                          <SelectItem value="Nail Art">Nail Art</SelectItem>
+                          <SelectItem value="Manicure">Manicura</SelectItem>
+                          <SelectItem value="Pedicure">Pedicura</SelectItem>
+                          <SelectItem value="Gel Nails">Uñas de Gel</SelectItem>
+                          <SelectItem value="Nail Art">Arte en Uñas</SelectItem>
                         </SelectContent>
                       </Select>
                       <FormMessage />
@@ -188,7 +189,7 @@ export default function Home() {
                     name="date"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel>Date</FormLabel>
+                        <FormLabel>Fecha</FormLabel>
                         <Popover>
                           <PopoverTrigger asChild>
                             <FormControl>
@@ -200,9 +201,9 @@ export default function Home() {
                                 )}
                               >
                                 {field.value ? (
-                                  format(field.value, 'PPP')
+                                  format(field.value, 'PPP', { locale: es })
                                 ) : (
-                                  <span>Pick a date</span>
+                                  <span>Elige una fecha</span>
                                 )}
                                 <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                               </Button>
@@ -217,6 +218,7 @@ export default function Home() {
                                 date < new Date() || date < new Date('1900-01-01')
                               }
                               initialFocus
+                              locale={es}
                             />
                           </PopoverContent>
                         </Popover>
@@ -229,11 +231,11 @@ export default function Home() {
                     name="time"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Time</FormLabel>
+                        <FormLabel>Hora</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger>
-                              <SelectValue placeholder="Select a time" />
+                              <SelectValue placeholder="Selecciona una hora" />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -249,7 +251,7 @@ export default function Home() {
                 </div>
                 <Button type="submit" className="w-full" disabled={isSubmitting}>
                    {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  Book Appointment
+                  Agendar Cita
                 </Button>
               </form>
             </Form>

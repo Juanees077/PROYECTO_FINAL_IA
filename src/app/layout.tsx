@@ -5,8 +5,8 @@ import { MainNav } from '@/components/main-nav';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Sofia Nails',
-  description: 'Book your next nail appointment with Sofia Nails.',
+  title: 'Uñas Sofía',
+  description: 'Agenda tu próxima cita de uñas con Uñas Sofía.',
 };
 
 export default function RootLayout({
@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
@@ -36,7 +36,7 @@ export default function RootLayout({
         <MainNav />
         <main className="flex-grow">{children}</main>
         <footer className="bg-card text-card-foreground p-4 text-center text-sm">
-          <p>&copy; {new Date().getFullYear()} Sofia Nails. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Uñas Sofía. Todos los derechos reservados.</p>
         </footer>
         <Toaster />
       </body>

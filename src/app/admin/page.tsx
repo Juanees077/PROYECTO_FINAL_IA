@@ -24,7 +24,7 @@ import { NailPolish } from '@/components/icons';
 const ADMIN_PASSWORD = 'password123'; // In a real app, this would be handled securely on the backend.
 
 const loginSchema = z.object({
-  password: z.string().min(1, 'Password is required'),
+  password: z.string().min(1, 'La contraseña es requerida'),
 });
 
 export default function AdminLoginPage() {
@@ -46,14 +46,14 @@ export default function AdminLoginPage() {
       if (values.password === ADMIN_PASSWORD) {
         sessionStorage.setItem('sofia-nails-admin', 'true');
         toast({
-          title: 'Login Successful',
-          description: 'Redirecting to dashboard...',
+          title: 'Inicio de Sesión Exitoso',
+          description: 'Redirigiendo al panel de control...',
         });
         router.push('/admin/dashboard');
       } else {
         toast({
-          title: 'Login Failed',
-          description: 'Incorrect password. Please try again.',
+          title: 'Error de Inicio de Sesión',
+          description: 'Contraseña incorrecta. Por favor, inténtalo de nuevo.',
           variant: 'destructive',
         });
         form.reset();
@@ -69,8 +69,8 @@ export default function AdminLoginPage() {
           <div className="flex justify-center mb-4">
             <NailPolish className="h-12 w-12 text-primary"/>
           </div>
-          <CardTitle className="font-headline text-2xl">Admin Access</CardTitle>
-          <CardDescription>Enter the password to manage appointments.</CardDescription>
+          <CardTitle className="font-headline text-2xl">Acceso de Administrador</CardTitle>
+          <CardDescription>Ingresa la contraseña para gestionar las citas.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -80,7 +80,7 @@ export default function AdminLoginPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Contraseña</FormLabel>
                     <FormControl>
                       <Input type="password" placeholder="••••••••" {...field} />
                     </FormControl>
@@ -90,7 +90,7 @@ export default function AdminLoginPage() {
               />
               <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                Log In
+                Iniciar Sesión
               </Button>
             </form>
           </Form>

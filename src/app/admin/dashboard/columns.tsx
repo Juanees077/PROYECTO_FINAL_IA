@@ -3,6 +3,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal } from 'lucide-react';
 import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -25,7 +26,7 @@ const ActionCell = ({ row }: { row: any }) => {
     const result = await deleteAppointment(appointment.id);
     if (result?.success) {
       toast({
-        title: 'Success',
+        title: 'Éxito',
         description: result.message,
       });
       // The page will be revalidated by the server action
@@ -35,7 +36,7 @@ const ActionCell = ({ row }: { row: any }) => {
     } else {
       toast({
         title: 'Error',
-        description: result?.message || 'Failed to delete appointment.',
+        description: result?.message || 'No se pudo eliminar la cita.',
         variant: 'destructive',
       });
     }
@@ -45,18 +46,18 @@ const ActionCell = ({ row }: { row: any }) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">Open menu</span>
+          <span className="sr-only">Abrir menú</span>
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuLabel>Acciones</DropdownMenuLabel>
         <DropdownMenuItem onClick={() => navigator.clipboard.writeText(appointment.clientPhone)}>
-          Copy Phone
+          Copiar Teléfono
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleDelete} className="text-destructive focus:text-destructive">
-          Delete
+          Eliminar
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -66,27 +67,27 @@ const ActionCell = ({ row }: { row: any }) => {
 export const columns: ColumnDef<Appointment>[] = [
   {
     accessorKey: 'clientName',
-    header: 'Client',
+    header: 'Cliente',
   },
   {
     accessorKey: 'service',
-    header: 'Service',
+    header: 'Servicio',
   },
   {
     accessorKey: 'date',
-    header: 'Date',
+    header: 'Fecha',
     cell: ({ row }) => {
       const date = row.getValue('date') as Date;
-      return <div>{format(date, 'PPP')}</div>;
+      return <div>{format(date, 'PPP', { locale: es })}</div>;
     },
   },
   {
     accessorKey: 'time',
-    header: 'Time',
+    header: 'Hora',
   },
    {
     accessorKey: 'clientPhone',
-    header: 'Phone',
+    header: 'Teléfono',
   },
   {
     id: 'actions',

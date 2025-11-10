@@ -6,13 +6,13 @@ import { appointments } from '@/lib/data';
 import type { Appointment } from '@/lib/types';
 
 const appointmentFormSchema = z.object({
-  clientName: z.string().min(2, 'Name is required'),
-  clientPhone: z.string().min(10, 'A valid phone number is required'),
+  clientName: z.string().min(2, 'Se requiere un nombre'),
+  clientPhone: z.string().min(10, 'Se requiere un número de teléfono válido'),
   service: z.enum(['Manicure', 'Pedicure', 'Gel Nails', 'Nail Art']),
   date: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: 'Invalid date',
+    message: 'Fecha inválida',
   }),
-  time: z.string().nonempty('Time is required'),
+  time: z.string().nonempty('Se requiere una hora'),
 });
 
 export async function createAppointment(
@@ -32,7 +32,7 @@ export async function createAppointment(
     console.log(validatedFields.error.flatten().fieldErrors);
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Please fill out all fields correctly.',
+      message: 'Por favor, completa todos los campos correctamente.',
     };
   }
 
@@ -54,10 +54,10 @@ export async function createAppointment(
     revalidatePath('/');
     revalidatePath('/admin/dashboard');
 
-    return { message: 'Appointment booked successfully!', appointment: newAppointment };
+    return { message: '¡Cita agendada con éxito!', appointment: newAppointment };
   } catch (e) {
     return {
-      message: 'Database Error: Failed to Create Appointment.',
+      message: 'Error de la base de datos: No se pudo crear la cita.',
     };
   }
 }
@@ -68,10 +68,10 @@ export async function deleteAppointment(id: string) {
     if (index > -1) {
       appointments.splice(index, 1);
       revalidatePath('/admin/dashboard');
-      return { success: true, message: 'Appointment deleted.' };
+      return { success: true, message: 'Cita eliminada.' };
     }
-    return { success: false, message: 'Appointment not found.' };
+    return { success: false, message: 'Cita no encontrada.' };
   } catch (e) {
-     return { success: false, message: 'Database Error: Failed to Delete Appointment.' };
+     return { success: false, message: 'Error de la base de datos: No se pudo eliminar la cita.' };
   }
 }
